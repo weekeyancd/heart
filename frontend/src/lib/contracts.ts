@@ -71,3 +71,13 @@ export interface KnowledgeStateData {
   visitedParts: string[]
   completedGuidedSteps: number
 }
+
+export interface PartInfo {
+  partId: string
+  type: HeartPart['type']
+}
+
+export interface InteractionState {
+  hoverId: string | null
+  selectedId: string | null
+}

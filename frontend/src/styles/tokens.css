@@ -1,0 +1,49 @@
+:root {
+  /* Colors — dark medical theme */
+  --color-bg: #1a1a2e;
+  --color-surface: rgba(10, 10, 30, 0.82);
+  --color-surface-hover: rgba(10, 10, 30, 0.92);
+  --color-text: #f0f0f5;
+  --color-text-muted: rgba(240, 240, 245, 0.5);
+  --color-text-dim: rgba(240, 240, 245, 0.3);
+  --color-accent: #4fc3f7;
+  --color-accent-hover: #81d4fa;
+  --color-oxy: #ff4444;
+  --color-deoxy: #7c4dff;
+  --color-divider: rgba(255, 255, 255, 0.08);
+  --color-badge-chamber: #4fc3f7;
+  --color-badge-vessel: #ef5350;
+  --color-badge-valve: #66bb6a;
+  --color-badge-structure: #ffa726;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Typography */
+  --font-base: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  --font-size-hero: 32px;
+  --line-height: 1.6;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --panel-width: 380px;
+  --toolbar-height: 52px;
+}

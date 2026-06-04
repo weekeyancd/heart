@@ -2,7 +2,7 @@ package com.heart.service;
 
 import com.heart.model.dto.ModelMetaDto;
 import com.heart.model.dto.ModelMetaDto.ColorMappingDto;
-import jakarta.annotation.PostConstruct;
+import com.heart.repository.HeartPartRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,16 +11,14 @@ import java.util.Map;
 @Service
 public class ModelMetaService {
 
-    private ModelMetaDto meta;
+    private final HeartPartRepository repository;
 
-    @PostConstruct
-    void init() {
-        List<String> partIds = List.of(
-            "left-atrium", "left-ventricle", "right-atrium", "right-ventricle",
-            "aorta", "pulmonary-artery", "superior-vena-cava", "inferior-vena-cava", "pulmonary-vein",
-            "tricuspid-valve", "mitral-valve", "pulmonary-valve", "aortic-valve",
-            "septum"
-        );
+    public ModelMetaService(HeartPartRepository repository) {
+        this.repository = repository;
+    }
+
+    public ModelMetaDto getModelMeta() {
+        List<String> partIds = repository.findAll().stream().map(e -> e.getId()).toList();
 
         Map<String, ColorMappingDto> colorMapping = Map.ofEntries(
             Map.entry("left-atrium", new ColorMappingDto("#e74c3c", "#ff4444", "#6622aa")),
@@ -50,10 +48,6 @@ public class ModelMetaService {
             "aortic-valve", List.of("aorta", "left-ventricle")
         );
 
-        meta = new ModelMetaDto(partIds, colorMapping, occlusionMap);
-    }
-
-    public ModelMetaDto getModelMeta() {
-        return meta;
+        return new ModelMetaDto(partIds, colorMapping, occlusionMap);
     }
 }

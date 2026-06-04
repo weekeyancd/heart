@@ -15,11 +15,15 @@ interface ParticleData {
   phaseOffset: number
 }
 
+interface CirculationParticlesProps {
+  reducedMotion?: boolean
+}
+
 const OXY_COLOR = new THREE.Color('#ff4444')
 const DEOXY_COLOR = new THREE.Color('#7c4dff')
 const PARTICLE_COUNT_PER_EDGE = 4
 
-export function CirculationParticles() {
+export function CirculationParticles({ reducedMotion = false }: CirculationParticlesProps) {
   const paths = useCirculationStore((s) => s.paths)
   const activeLoopId = useCirculationStore((s) => s.activeLoopId)
   const isPlaying = useCirculationStore((s) => s.isPlaying)
@@ -102,7 +106,7 @@ export function CirculationParticles() {
   }, [geometry, material])
 
   useFrame((_, delta) => {
-    if (!isPlaying || particles.length === 0) return
+    if (!isPlaying || particles.length === 0 || reducedMotion) return
 
     const posAttr = geometry.getAttribute('position') as THREE.BufferAttribute
     const tick = useCirculationStore.getState().tick

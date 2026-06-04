@@ -11,7 +11,11 @@ import { getRenderState } from '../../lib/renderResolver'
 const HEARTBEAT_BPM = 72
 const HEARTBEAT_PERIOD = 60 / HEARTBEAT_BPM
 
-export function HeartModel() {
+interface HeartModelProps {
+  reducedMotion?: boolean
+}
+
+export function HeartModel({ reducedMotion = false }: HeartModelProps) {
   const { scene } = useGLTF(import.meta.env.BASE_URL + 'models/heart.glb')
   const layerRef = useRef<SemanticMeshLayer | null>(null)
   const controllerRef = useRef<MaterialController | null>(null)
@@ -63,6 +67,7 @@ export function HeartModel() {
     const controller = controllerRef.current
     const layer = layerRef.current
     if (!controller || !layer || !selectedId) return
+    if (reducedMotion) return
 
     clockRef.current += delta
     const phase = (clockRef.current % HEARTBEAT_PERIOD) / HEARTBEAT_PERIOD

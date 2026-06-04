@@ -13,14 +13,17 @@ export function GuidedTour() {
   const markVisited = useKnowledgeStore((s) => s.markVisited)
   const incrementGuidedSteps = useKnowledgeStore((s) => s.incrementGuidedSteps)
 
-  if (guidedStep === null) return null
-
-  const stepIdx = guidedStep
+  const stepIdx = guidedStep ?? -1
   const step = GUIDED_STEPS[stepIdx]
-  if (!step) return null
+  const part = parts.find((p) => p.id === step?.partId)
 
-  const part = parts.find((p) => p.id === step.partId)
-  if (!part) return null
+  useEffect(() => {
+    if (step && !visitedParts.has(step.partId)) {
+      markVisited(step.partId)
+    }
+  }, [step?.partId, visitedParts, markVisited])
+
+  if (guidedStep === null || !step || !part) return null
 
   const handleNext = () => {
     const nextIdx = stepIdx + 1
@@ -45,12 +48,6 @@ export function GuidedTour() {
     setGuidedStep(null)
     select(null)
   }
-
-  useEffect(() => {
-    if (step && !visitedParts.has(step.partId)) {
-      markVisited(step.partId)
-    }
-  }, [step?.partId, visitedParts, markVisited])
 
   return (
     <div className="guided-tour">

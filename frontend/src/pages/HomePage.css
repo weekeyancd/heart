@@ -183,3 +183,12 @@
     padding: var(--space-lg);
   }
 }
+
+.home--reduced-motion .home__bg-glow,
+.home--reduced-motion .home__logo {
+  animation: none;
+}
+
+.home--reduced-motion .home__card {
+  transition: none;
+}

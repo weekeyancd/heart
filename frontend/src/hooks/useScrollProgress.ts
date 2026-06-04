@@ -7,12 +7,12 @@ export function useScrollProgress(element?: HTMLElement | null): number {
     const target = element ?? window
 
     const handler = () => {
-      if (target === window) {
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-        setProgress(scrollHeight > 0 ? window.scrollY / scrollHeight : 0)
-      } else {
+      if (target instanceof HTMLElement) {
         const scrollHeight = target.scrollHeight - target.clientHeight
         setProgress(scrollHeight > 0 ? target.scrollTop / scrollHeight : 0)
+      } else {
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+        setProgress(scrollHeight > 0 ? window.scrollY / scrollHeight : 0)
       }
     }
 

@@ -1,11 +1,20 @@
 import { Link } from 'react-router-dom'
+import { useReducedMotion } from '../hooks/useReducedMotion'
+import { useScrollProgress } from '../hooks/useScrollProgress'
 import './HomePage.css'
 
 export function HomePage() {
+  const reducedMotion = useReducedMotion()
+  const scrollProgress = useScrollProgress()
+
+  const parallaxStyle = reducedMotion
+    ? undefined
+    : { transform: `translateY(${scrollProgress * -30}px)` }
+
   return (
-    <div className="home">
+    <div className={`home${reducedMotion ? ' home--reduced-motion' : ''}`}>
       <div className="home__bg-glow" />
-      <header className="home__header">
+      <header className="home__header" style={parallaxStyle}>
         <div className="home__logo">♥</div>
         <h1 className="home__title">心脏解剖互动教学</h1>
         <p className="home__subtitle">

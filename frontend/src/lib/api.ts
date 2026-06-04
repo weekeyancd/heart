@@ -1,10 +1,10 @@
-import type { ApiResponse, HeartPart, CirculationPath, ModelMeta } from './contracts'
+import type { ApiResponse, HeartPart, CirculationPath, ModelMeta, KnowledgeProgress } from './contracts'
 import { LOCAL_PARTS, LOCAL_PATHS, LOCAL_MODEL_META } from './localData'
 
 const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8080/api'
 
-async function request<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`)
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, init)
   const json: ApiResponse<T> = await res.json()
   if (!json.success) {
     throw new Error(json.error ?? `API error: ${path}`)
@@ -75,4 +75,38 @@ export async function fetchModelMeta(): Promise<ModelMeta> {
   } catch {
     return LOCAL_MODEL_META
   }
+}
+
+export async function fetchProgress(userId: string): Promise<KnowledgeProgress | null> {
+  try {
+    return await request<KnowledgeProgress>(`/progress/${userId}`)
+  } catch {
+    return null
+  }
+}
+
+export async function postVisit(userId: string, partId: string): Promise<void> {
+  try {
+    await request<void>(`/progress/${userId}/visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ partId }),
+    })
+  } catch { /* non-critical */ }
+}
+
+export async function putGuidedSteps(userId: string, stepsCompleted: number): Promise<void> {
+  try {
+    await request<void>(`/progress/${userId}/guided-steps`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ stepsCompleted }),
+    })
+  } catch { /* non-critical */ }
+}
+
+export async function deleteProgress(userId: string): Promise<void> {
+  try {
+    await request<void>(`/progress/${userId}`, { method: 'DELETE' })
+  } catch { /* non-critical */ }
 }

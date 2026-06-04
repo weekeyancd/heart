@@ -81,3 +81,11 @@ export interface InteractionState {
   hoverId: string | null
   selectedId: string | null
 }
+
+export interface KnowledgeProgress {
+  userId: string
+  visitedParts: string[]
+  guidedStepsCompleted: number
+  totalParts: number
+  completionPercentage: number
+}

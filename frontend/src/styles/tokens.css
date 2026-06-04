@@ -46,4 +46,7 @@
   /* Layout */
   --panel-width: 380px;
   --toolbar-height: 52px;
+
+  /* Touch targets */
+  --touch-min: 44px;
 }

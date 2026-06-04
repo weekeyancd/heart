@@ -1,5 +1,12 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useKnowledgeStore } from '../knowledgeStore'
+
+vi.mock('../../lib/api', () => ({
+  fetchProgress: vi.fn().mockResolvedValue(null),
+  postVisit: vi.fn().mockResolvedValue(undefined),
+  putGuidedSteps: vi.fn().mockResolvedValue(undefined),
+  deleteProgress: vi.fn().mockResolvedValue(undefined),
+}))
 
 describe('knowledgeStore', () => {
   beforeEach(() => {
@@ -47,5 +54,10 @@ describe('knowledgeStore', () => {
     const state = useKnowledgeStore.getState()
     expect(state.visitedParts.size).toBe(0)
     expect(state.completedGuidedSteps).toBe(0)
+  })
+
+  it('has userId', () => {
+    const state = useKnowledgeStore.getState()
+    expect(state.userId).toBeTruthy()
   })
 })

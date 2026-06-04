@@ -100,3 +100,10 @@
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
+
+@media (max-width: 768px) {
+  .guided-tour {
+    bottom: 100px;
+    max-width: calc(100% - var(--space-lg) * 2);
+  }
+}

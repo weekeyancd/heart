@@ -6,6 +6,7 @@ import { HintBar } from '../components/ui/HintBar'
 import { GuidedTour } from '../components/ui/GuidedTour'
 import { useHeartStore } from '../store/heartStore'
 import { useCirculationStore } from '../store/circulationStore'
+import { useKnowledgeStore } from '../store/knowledgeStore'
 import './HeartPage.css'
 
 export function HeartPage() {
@@ -14,12 +15,14 @@ export function HeartPage() {
   const loadPaths = useCirculationStore((s) => s.loadPaths)
   const setGuidedStep = useHeartStore((s) => s.setGuidedStep)
   const select = useHeartStore((s) => s.select)
+  const loadProgress = useKnowledgeStore((s) => s.loadProgress)
 
   useEffect(() => {
     loadParts()
     loadModelMeta()
     loadPaths()
-  }, [loadParts, loadModelMeta, loadPaths])
+    loadProgress()
+  }, [loadParts, loadModelMeta, loadPaths, loadProgress])
 
   useEffect(() => {
     if (localStorage.getItem('heart-start-tour') === '1') {

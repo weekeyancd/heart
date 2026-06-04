@@ -82,3 +82,57 @@
 .toolbar__btn--reset {
   color: var(--color-text-dim);
 }
+
+/* ── Responsive: tablet and below ── */
+
+@media (max-width: 768px) {
+  .toolbar {
+    right: 0;
+    padding: 0 var(--space-sm);
+    gap: var(--space-xs);
+  }
+
+  .toolbar__title {
+    display: none;
+  }
+
+  .toolbar__back {
+    min-width: var(--touch-min);
+    min-height: var(--touch-min);
+  }
+
+  .toolbar__center {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+
+  .toolbar__center::-webkit-scrollbar {
+    display: none;
+  }
+
+  .toolbar__right {
+    gap: 4px;
+  }
+
+  .toolbar__btn {
+    min-height: var(--touch-min);
+    min-width: var(--touch-min);
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar {
+    padding: 0 var(--space-xs);
+  }
+
+  .toolbar__btn {
+    padding: var(--space-xs);
+    font-size: 11px;
+  }
+}

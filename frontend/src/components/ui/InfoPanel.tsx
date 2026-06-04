@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useHeartStore } from '../../store/heartStore'
 import { useKnowledgeStore } from '../../store/knowledgeStore'
 import './InfoPanel.css'
@@ -24,6 +24,8 @@ export function InfoPanel() {
   const visitedParts = useKnowledgeStore((s) => s.visitedParts)
   const markVisited = useKnowledgeStore((s) => s.markVisited)
 
+  const [expanded, setExpanded] = useState(false)
+
   const part = parts.find((p) => p.id === selectedId)
 
   useEffect(() => {
@@ -31,6 +33,8 @@ export function InfoPanel() {
       markVisited(part.id)
     }
   }, [part?.id, visitedParts, markVisited])
+
+  const toggleExpanded = useCallback(() => setExpanded((v) => !v), [])
 
   if (!part) {
     return (
@@ -44,7 +48,10 @@ export function InfoPanel() {
   }
 
   return (
-    <aside className="info-panel">
+    <aside className={`info-panel${expanded ? ' info-panel--expanded' : ''}`}>
+      <div className="info-panel__handle" onClick={toggleExpanded} role="button" aria-label={expanded ? '收起面板' : '展开面板'}>
+        <span className="info-panel__handle-bar" />
+      </div>
       <header className="info-panel__header">
         <div className="info-panel__title-row">
           <h2 className="info-panel__name-zh">{part.nameZh}</h2>
@@ -61,7 +68,7 @@ export function InfoPanel() {
             <span className="info-panel__visited-dot" title="已浏览">✓</span>
           )}
         </div>
-        <button className="info-panel__close" onClick={() => select(null)} aria-label="关闭">
+        <button className="info-panel__close" onClick={() => { select(null); setExpanded(false) }} aria-label="关闭">
           ✕
         </button>
       </header>

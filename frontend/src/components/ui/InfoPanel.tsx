@@ -27,12 +27,13 @@ export function InfoPanel() {
   const [expanded, setExpanded] = useState(false)
 
   const part = parts.find((p) => p.id === selectedId)
+  const partId = part?.id
 
   useEffect(() => {
-    if (part && !visitedParts.has(part.id)) {
-      markVisited(part.id)
+    if (partId && !visitedParts.has(partId)) {
+      markVisited(partId)
     }
-  }, [part?.id, visitedParts, markVisited])
+  }, [partId, visitedParts, markVisited])
 
   const toggleExpanded = useCallback(() => setExpanded((v) => !v), [])
 

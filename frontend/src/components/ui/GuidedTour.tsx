@@ -15,13 +15,14 @@ export function GuidedTour() {
 
   const stepIdx = guidedStep ?? -1
   const step = GUIDED_STEPS[stepIdx]
-  const part = parts.find((p) => p.id === step?.partId)
+  const stepPartId = step?.partId
+  const part = parts.find((p) => p.id === stepPartId)
 
   useEffect(() => {
-    if (step && !visitedParts.has(step.partId)) {
-      markVisited(step.partId)
+    if (stepPartId && !visitedParts.has(stepPartId)) {
+      markVisited(stepPartId)
     }
-  }, [step?.partId, visitedParts, markVisited])
+  }, [stepPartId, visitedParts, markVisited])
 
   if (guidedStep === null || !step || !part) return null
 
